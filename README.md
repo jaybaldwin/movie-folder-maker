@@ -1,4 +1,4 @@
-### Movie Folder Rename
+# Movie Folder Maker
 
 ## Introduction
 
