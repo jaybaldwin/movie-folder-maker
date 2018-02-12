@@ -11,33 +11,33 @@ namespace MovieFolderMaker
 
             string[] aryFolders = { "4k", "1080p", "720p", "DVD-Rip", "BR-Rip", "Screener" };
 
-            foreach (string str in aryFolders)
+            foreach (string strFolder in aryFolders)
             {
                 Console.WriteLine("");
                 Console.WriteLine("");
 
                 string path = Directory.GetCurrentDirectory();
-                if (!Directory.Exists(String.Format(@"{0}\{1}", path, str)))
+                if (!Directory.Exists($@"{path}\{strFolder}"))
                 {
-                    Console.WriteLine(String.Format(@"Skipping. \{0}\ ... doesn't exist.", str));
+                    Console.WriteLine($@"Skipping. \{strFolder}\ ... doesn't exist.");
                     continue;
                 }
 
-                path += String.Format(@"\{0}", str);
+                path += $@"\{strFolder}";
 
-                Console.WriteLine(String.Format(@"Inspecting {0}", path));
+                Console.WriteLine($@"Inspecting {path}");
                 string[] files = Directory.GetFiles(path);
 
                 foreach (string filename in files)
                 {
                     Console.WriteLine("");
-                    Console.WriteLine(String.Format(@" ... parsing {0}", filename));
+                    Console.WriteLine($@" ... parsing {filename}");
 
                     // if file like (.+\s\(\d{4}\))
                     Regex regex = new Regex(@"([^\\\n]*\s\(\d{4}\))");
                     bool blnMatch = regex.IsMatch(filename);
 
-                    Console.WriteLine(String.Format(@" ... ... is match? {0}", blnMatch));
+                    Console.WriteLine($@" ... ... is match? {blnMatch}");
 
                     if (!blnMatch)
                     {
@@ -47,7 +47,8 @@ namespace MovieFolderMaker
 
                     CaptureCollection groups = regex.Match(filename).Captures;
 
-                    if (groups == null || groups.Count == 0)
+                    // ReSharper wanted this taken out: groups == null || 
+                    if (groups.Count == 0)
                     {
                         Console.WriteLine(" ... No capture group found. Skipping.");
                         continue;
@@ -55,28 +56,28 @@ namespace MovieFolderMaker
 
                     string strFolderToCreate = groups[0].Value;
 
-                    Console.WriteLine(String.Format(@" ... ... Folder should be ... ""{0}""", strFolderToCreate));
+                    Console.WriteLine($@" ... ... Folder should be ... ""{strFolderToCreate}""");
 
-                    bool blnFolderExists = Directory.Exists(String.Format(@"{0}\{1}", path, strFolderToCreate));
+                    bool blnFolderExists = Directory.Exists($@"{path}\{strFolderToCreate}");
 
-                    Console.WriteLine(String.Format(@" ... ... ... Exists? ... {0}", blnFolderExists));
+                    Console.WriteLine($@" ... ... ... Exists? ... {blnFolderExists}");
 
                     if (!blnFolderExists)
                     {
-                        Console.WriteLine(String.Format(@" ... ... ... Creating Directory ""{0}\{1}""", path, strFolderToCreate));
-                        Directory.CreateDirectory(String.Format(@"{0}\{1}", path, strFolderToCreate));
+                        Console.WriteLine($@" ... ... ... Creating Directory ""{path}\{strFolderToCreate}""");
+                        Directory.CreateDirectory($@"{path}\{strFolderToCreate}");
                     }
 
-                    string strNewFileName = filename.Replace(path, String.Format(@"{0}\{1}", path, strFolderToCreate));
+                    string strNewFileName = filename.Replace(path, $@"{path}\{strFolderToCreate}");
 
                     if (File.Exists(strNewFileName))
                     {
-                        Console.WriteLine(String.Format(@" ... ... TARGET FILE ALREADY EXISTS: ""{0}"" - SKIPPING", strNewFileName));
+                        Console.WriteLine($@" ... ... TARGET FILE ALREADY EXISTS: ""{strNewFileName}"" - SKIPPING");
                         continue;
                     }
 
-                    Console.WriteLine(String.Format(@" ... ... Renaming file ""{0}""", filename));
-                    Console.WriteLine(String.Format(@" ... ... ... to ""{0}""", strNewFileName));
+                    Console.WriteLine($@" ... ... Renaming file ""{filename}""");
+                    Console.WriteLine($@" ... ... ... to ""{strNewFileName}""");
 
                     File.Move(filename, strNewFileName);
 
