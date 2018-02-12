@@ -1,0 +1,7 @@
+D:\Development\Repositories\Personal\Projects\MovieFolderMaker\MovieFolderMaker\bin\Debug\MovieFolderMaker.exe.config
+D:\Development\Repositories\Personal\Projects\MovieFolderMaker\MovieFolderMaker\bin\Debug\MovieFolderMaker.exe
+D:\Development\Repositories\Personal\Projects\MovieFolderMaker\MovieFolderMaker\bin\Debug\MovieFolderMaker.pdb
+D:\Development\Repositories\Personal\Projects\MovieFolderMaker\MovieFolderMaker\obj\Debug\MovieFolderMaker.csprojResolveAssemblyReference.cache
+D:\Development\Repositories\Personal\Projects\MovieFolderMaker\MovieFolderMaker\obj\Debug\MovieFolderMaker.exe
+D:\Development\Repositories\Personal\Projects\MovieFolderMaker\MovieFolderMaker\obj\Debug\MovieFolderMaker.pdb
+D:\Development\Repositories\Personal\Projects\MovieFolderMaker\MovieFolderMaker\obj\Debug\MovieFolderMaker.csproj.CoreCompileInputs.cache
