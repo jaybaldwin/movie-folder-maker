@@ -8,6 +8,64 @@ namespace MovieFolderMaker
     {
         static void Main(string[] args)
         {
+            string strBaseDirectory = Directory.GetCurrentDirectory();
+
+            if (args != null && args.Length > 0)
+            {
+                switch (args[0])
+                {
+                    case "-d":
+                    case "/d":
+
+                        if (args.Length <= 1 || args[1] == null)
+                        {
+                            Console.WriteLine("Error. Must specify base directory after -d flag.");
+                            return;
+                        }
+
+                        strBaseDirectory = args[1];
+
+                        // Remove the trailing ", if it was preceded by \.
+                        if (strBaseDirectory.EndsWith("\"")) strBaseDirectory = strBaseDirectory.Substring(0, strBaseDirectory.Length - 1);
+                        // Remove the trailing slash, if it's provided.
+                        if (strBaseDirectory.EndsWith("\\")) strBaseDirectory = strBaseDirectory.Substring(0, strBaseDirectory.Length - 1);
+                        
+
+                        break;
+
+                    //case "--help":
+                    //case "?":
+                    //case "-?":
+                    //case "/?":
+                    //case "-help":
+                    //case "help":
+                    default:
+
+                        Console.WriteLine("/*******************************************************");
+                        Console.WriteLine("** MakeFolderMaker v0.1 by Jay Baldwin:");
+                        Console.WriteLine("**");
+                        Console.WriteLine("** Usage:\tMakeFolderMaker.exe -d {base_directory}");
+                        Console.WriteLine("** Example:\tMakeFolderMaker.exe -d \"C:\\Media\\Movies\"");
+                        Console.WriteLine("**");
+                        Console.WriteLine("** Arguments:");
+                        Console.WriteLine("** \t-?\tThis help output.");
+                        Console.WriteLine("** \t-d\tBase directory to use. Note: if base directory is not defined, ");
+                        Console.WriteLine("** \t\tuse current directory.");
+                        Console.WriteLine("*******************************************************/");
+
+                        return;
+                        //break;
+
+                }
+            }
+
+            if (!Directory.Exists(strBaseDirectory))
+            {
+                Console.WriteLine($@"Value for argument 1, ""{strBaseDirectory}"" is not a valid directory.  Exiting...");
+                return;
+            }
+
+            Console.WriteLine($@"BASE DIRECTORY: ""{strBaseDirectory}""");
 
             string[] aryFolders = { "4k", "1080p", "720p", "DVD-Rip", "BR-Rip", "Screener" };
 
@@ -16,10 +74,10 @@ namespace MovieFolderMaker
                 Console.WriteLine("");
                 Console.WriteLine("");
 
-                string path = Directory.GetCurrentDirectory();
+                string path = strBaseDirectory;
                 if (!Directory.Exists($@"{path}\{strFolder}"))
                 {
-                    Console.WriteLine($@"Skipping. \{strFolder}\ ... doesn't exist.");
+                    Console.WriteLine($@"Skipping - ""{strBaseDirectory}\{strFolder}\""  doesn't exist.");
                     continue;
                 }
 
